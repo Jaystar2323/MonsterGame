@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.39, y: 7.53, z: 0}
+  m_LocalPosition: {x: 4.5, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -178,8 +178,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338405438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 6, y: 10, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 5, z: 2}
   m_Children: []
   m_Father: {fileID: 883636913}
   m_RootOrder: 1
@@ -785,76 +785,76 @@ Tilemap:
       e33: 7.88e-43
   - m_RefCount: 0
     m_Data:
-      e00: 4e-45
-      e01: 2.8257747e+10
-      e02: 0
-      e03: 9.180252e-10
-      e10: 7.89e-43
-      e11: 7.89e-43
-      e12: 7.86e-43
-      e13: 7.86e-43
-      e20: -6.410213e-18
-      e21: 0
-      e22: -2.3619146e+30
-      e23: -0.0295372
-      e30: 7.88e-43
-      e31: 0
-      e32: 4.5904e-41
-      e33: 7.88e-43
+      e00: -1.084227e-19
+      e01: -1.8355179e-19
+      e02: -1.8354042e-19
+      e03: -1.8354042e-19
+      e10: 8.38e-43
+      e11: 3.14e-43
+      e12: 3.14e-43
+      e13: 3.14e-43
+      e20: -2.6897685e+26
+      e21: 1.1305532e-19
+      e22: 3.6748447
+      e23: 1.1305532e-19
+      e30: 4.5904e-41
+      e31: 8.41e-43
+      e32: 8.38e-43
+      e33: 8.41e-43
   - m_RefCount: 0
     m_Data:
-      e00: 4e-45
-      e01: 2.859624e+10
-      e02: 0
-      e03: 8.519838e-10
-      e10: 7.89e-43
-      e11: 7.89e-43
-      e12: 7.86e-43
-      e13: 7.86e-43
-      e20: -6.410213e-18
-      e21: 0
-      e22: -2.3619146e+30
-      e23: -0.0295372
-      e30: 7.88e-43
-      e31: 0
-      e32: 4.5904e-41
-      e33: 7.88e-43
+      e00: -1.084227e-19
+      e01: -1.8355179e-19
+      e02: -1.8354042e-19
+      e03: -1.8354042e-19
+      e10: 8.38e-43
+      e11: 3.14e-43
+      e12: 3.14e-43
+      e13: 3.14e-43
+      e20: -2.6897685e+26
+      e21: 1.1305532e-19
+      e22: 3.888361
+      e23: 1.1305532e-19
+      e30: 4.5904e-41
+      e31: 8.41e-43
+      e32: 8.38e-43
+      e33: 8.41e-43
   - m_RefCount: 0
     m_Data:
-      e00: 4e-45
-      e01: 2.8255126e+10
-      e02: 0
-      e03: 8.63269e-10
-      e10: 7.89e-43
-      e11: 7.89e-43
-      e12: 7.86e-43
-      e13: 7.86e-43
-      e20: -6.410213e-18
-      e21: 0
-      e22: -2.3619146e+30
-      e23: -0.0295372
-      e30: 7.88e-43
-      e31: 0
-      e32: 4.5904e-41
-      e33: 7.88e-43
+      e00: -1.084227e-19
+      e01: -1.8354848e-19
+      e02: -1.8353711e-19
+      e03: -1.8353711e-19
+      e10: 8.38e-43
+      e11: 3.14e-43
+      e12: 3.14e-43
+      e13: 3.14e-43
+      e20: -2.6897685e+26
+      e21: 1.1305532e-19
+      e22: 3.5684605
+      e23: 1.1305532e-19
+      e30: 4.5904e-41
+      e31: 8.41e-43
+      e32: 8.38e-43
+      e33: 8.41e-43
   - m_RefCount: 0
     m_Data:
-      e00: 2.579208e+22
-      e01: 0
-      e02: -2.3619146e+30
-      e03: 0
-      e10: 1.99e-43
-      e11: NaN
-      e12: 4.5904e-41
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 2.5792043e+22
-      e23: 0
-      e30: 0
-      e31: 7.34684e-40
-      e32: 1.99e-43
-      e33: 1
+      e00: -1.084227e-19
+      e01: -1.8355179e-19
+      e02: -1.8354042e-19
+      e03: -1.8354042e-19
+      e10: 8.38e-43
+      e11: 3.14e-43
+      e12: 3.14e-43
+      e13: 3.14e-43
+      e20: -2.6897685e+26
+      e21: 1.1305532e-19
+      e22: 3.6276493
+      e23: 1.1305532e-19
+      e30: 4.5904e-41
+      e31: 8.41e-43
+      e32: 8.38e-43
+      e33: 8.41e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
@@ -889,7 +889,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
   - m_RefCount: 0
-    m_Data: {r: 2.5827058e-29, g: 2.5827058e-29, b: 2.5827058e-29, a: 2.5827058e-29}
+    m_Data: {r: 1.1231603e-19, g: 1.1231603e-19, b: 1.1231603e-19, a: 1.1231603e-19}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -954,8 +954,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813095053}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 10, y: 6, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 3, z: 2}
   m_Children: []
   m_Father: {fileID: 883636913}
   m_RootOrder: 0
@@ -1068,8 +1068,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
-  m_Color: {r: 0.4716981, g: 0, b: 0.30058038, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 93775b4e7c52163459dc58a7d06c1603, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1088,7 +1088,7 @@ Transform:
   m_GameObject: {fileID: 883636911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children:
   - {fileID: 813095054}
   - {fileID: 338405439}
@@ -1323,11 +1323,14 @@ MonoBehaviour:
   player: {fileID: 729612938}
   collision: {fileID: 455799005}
   gm: {fileID: 1781616325}
+  fow: {fileID: 729612939}
   tile: {fileID: 11400000, guid: 2141736d9fdf9a544a1787b00f50be08, type: 2}
   log1: {fileID: 11400000, guid: ace9c01aa176ebb4483fb0bf8727511d, type: 2}
   log2: {fileID: 11400000, guid: 63bec7aeaeebc714196e37a85b201ebf, type: 2}
   log3: {fileID: 11400000, guid: e4c3ce293f175d14ebe2fc751d81a291, type: 2}
   bush: {fileID: 11400000, guid: 69cb3521cbba1184cbdc501766428f13, type: 2}
+  giantTreeHead: {fileID: 11400000, guid: 0f5f0b82704484546a3e592bf69581dd, type: 2}
+  giantTreeLog: {fileID: 11400000, guid: 327b13a9a3c51234caf677f0e5771c58, type: 2}
 --- !u!1 &1603434995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,7 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b79cd2a8f48f147b084e0cea908d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
+  tile: {fileID: 11400000, guid: 65d4558ef264737439c296588949036e, type: 2}
 --- !u!483693784 &1603434998
 TilemapRenderer:
   m_ObjectHideFlags: 0

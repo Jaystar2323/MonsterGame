@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class Node
 {
-    bool solid = true;
+    bool solid = false;
 
     float f; //sum g + h
     float g; //distance to end node
     float h; //distance to start node
 
-    Vector2 parent;
+    Vector2 pos;
+    Node parent;
 
-    void Start()
+    public Node(Vector2 pos)
     {
-
+        this.pos = pos;
+    }
+    public Node(Vector2 pos, bool isSolid)
+    {
+        solid = isSolid;
+        this.pos = pos;
     }
     public bool isSolid()
     {
@@ -26,11 +32,7 @@ public class Node
         f = 0;
         g = 0;
         h = 0;
-        //if (name.Equals("tile"))
-        //{
-        //    solid = false;
 
-        //}
     }
     public void reset()
     {
@@ -52,13 +54,21 @@ public class Node
     {
         return f;
     }
-    public void setParent(Vector2 tile)
+    public void setParent(Node node)
     {
-        parent = tile;
+        parent = node;
 
     }
-    public Vector2 getParent()
+    public Node getParent()
     {
         return parent;
+    }
+    public Vector2 getPos()
+    {
+        return pos;
+    }
+    public int getG()
+    {
+        return (int)g;
     }
 }

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public Vector2 triangle1;
     public Vector2 triangle2;
 
+    public static Node[,] nodes = new Node[26,16];
+
     [SerializeField] Tilemap tm;
     [SerializeField] Transform player;
 
@@ -55,23 +57,26 @@ public class GameManager : MonoBehaviour
     public List<Vector2> findPath(Vector2 start, Vector2 end)
     {
         Vector2 curPos = start;
-        getTile(start).reset();
-        
+        if (getNode(start).isSolid() || start.Equals(end))
+        {
+            return null;
+        }
+        //getTile(start).reset();
+        getNode(start).reset();
 
         List<Vector2> path = new List<Vector2>();
-        path.Add(start);
+        //open.Add(start);
 
         List<Vector2> open = new List<Vector2>();
         List<Vector2> closed = new List<Vector2>();
-        closed.Add(start);
+        open.Add(start);
 
         Vector2 up = new Vector2(0, 1);
         Vector2 down = new Vector2(0, -1);
         Vector2 left = new Vector2(-1, 0);
         Vector2 right = new Vector2(0, 1);
 
-        int c = 0;
-        while (!curPos.Equals(end) && c < 100)
+        while (!curPos.Equals(end))
         {
             //Debug.Log("hi");
             calcValues(open, closed, curPos, up, start, end);
@@ -89,23 +94,17 @@ public class GameManager : MonoBehaviour
                 open.RemoveAt(0);
                 closed.Add(curPos);
             }
-            c++;
-            Debug.Log(c + ": " + curPos + " Open: ");
-            printList(open);
+            //Debug.Log(c + ": " + curPos + " Open: ");
+            //printList(open);
 
         }
-        if (c == 100)
-        {
-            return null;
-        }
-        path.Add(curPos);
 
-        while (getTile(curPos).getF() != -1)
+        while (getNode(curPos).getF() != -1)
         {
-            curPos = getTile(curPos).getParent();
             path.Add(curPos);
+            curPos = getNode(curPos).getParent().getPos();
         }
-
+        path.Reverse();
         return path; //Path shouldn't include start tile
     }
 
@@ -113,38 +112,50 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("hi");
         Vector2 newPose = curPos + dir;
-        AStarTile t = getTile(newPose);
+        Node t = getNode(newPose);
         if (t != null && !t.isSolid())
         {
             if (open.Contains(newPose) || closed.Contains(newPose))
             {
+                //Debug.Log("NO");
                 return;
             }
 
             int f = t.calculateValues(newPose, start, end);
             int i = 0;
 
-            while (i < open.Count && getTile(open[i]).getF() <= f)
+            while (i < open.Count && getNode(open[i]).getF() < f)
             {
                 i++;
             }
-            t.setParent(curPos);
+            while (i < open.Count && getNode(open[i]).getF() == f && getNode(open[i]).getG() < t.getG())
+            {
+                i++;
+            }
+            t.setParent(getNode(curPos));
             open.Insert(i, newPose);
         }
     }
 
-    public void printList(List<Vector2> list)
+    public static void printList(List<Vector2> list)
     {
         string str = "";
         foreach (Vector2 i in list)
         {
-            str += getTile(i).getF() + " ";
+            str += i + " ";
         }
-        Debug.Log(str);
+        str += "Count: "+list.Count;
+        //Debug.Log(str);
     }
-    public AStarTile getTile(Vector2 tile)
+    public static Node getNode(Vector2 tile)
     {
-        return (AStarTile)tm.GetTile(new Vector3Int((int)tile.x, (int)tile.y, 1));
+
+        if ((int)tile.x + 13 > nodes.GetLength(0) || (int)tile.y + 8 > nodes.GetLength(1))
+        {
+            return null;
+        }
+        return nodes[(int)tile.x+13, (int)tile.y+8];
+
     }
 
 }

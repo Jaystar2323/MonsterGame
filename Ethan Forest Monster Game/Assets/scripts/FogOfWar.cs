@@ -10,26 +10,34 @@ public class FogOfWar : MonoBehaviour
     [SerializeField] Transform player;
     public int width;
     public int height;
-    void Start()
-    {
-       // GetComponent<TilemapRenderer>().enabled = true;
-        tm = GetComponent<Tilemap>();
-        //for (int i = -width; i < width; i++)
-        //{
-        //    for (int j = -height; j < height; j++)
-        //    {
-        //        Tile tile = (Tile)tm.GetTile(new Vector3Int(i, j, 0));
-        //        tile.color = new Color(1,1,1);
-                
-        //    }
-        //}
-        //tm.RefreshAllTiles();
-        //updateTiles();
-        
-    }
+    bool start = false;
 
+    public void init()
+    {
+        GetComponent<TilemapRenderer>().enabled = true;
+        tm = GetComponent<Tilemap>();
+        for (int i = -width; i < width; i++)
+        {
+            for (int j = -height; j < height; j++)
+            {
+                Tile tile = (Tile)tm.GetTile(new Vector3Int(i, j, 0));
+                Debug.Log(tm.GetTile(new Vector3Int(0, 0, 0)));
+                tile.color = new Color(1, 1, 1);
+
+            }
+        }
+        tm.RefreshAllTiles();
+        updateTiles();
+        start = true;
+    }
     public void updateTiles()
     {
+        if (!start)
+        {
+            init();
+            start = true;
+            return;
+        }
         Vector3Int playerPos = tm.WorldToCell(player.position);
         int[] maxs = {1, 2,3,3,3,2,1 };
         int k = 0;
