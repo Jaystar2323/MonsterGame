@@ -1331,6 +1331,14 @@ MonoBehaviour:
   bush: {fileID: 11400000, guid: 69cb3521cbba1184cbdc501766428f13, type: 2}
   giantTreeHead: {fileID: 11400000, guid: 0f5f0b82704484546a3e592bf69581dd, type: 2}
   giantTreeLog: {fileID: 11400000, guid: 327b13a9a3c51234caf677f0e5771c58, type: 2}
+  rock: {fileID: 11400000, guid: 165e4a38f3bc94748b9654281834387c, type: 2}
+  largeRock: {fileID: 11400000, guid: f0b10e52f425a274a8b9d5e28b61c520, type: 2}
+  rockCrumble: {fileID: 11400000, guid: 26b5b51b3c087aa47a901e0cfe3e5dbb, type: 2}
+  treeTrunk: {fileID: 11400000, guid: c7e55d09445d66d40bb0e26442876bb1, type: 2}
+  treeHead: {fileID: 11400000, guid: 094bf6a8be1feab48bbf930b48b9cde6, type: 2}
+  triangle: {fileID: 11400000, guid: 5474ba8ec1214bf40887f22587deeb11, type: 2}
+  square: {fileID: 11400000, guid: 6a1d1cb68e9cee747bd5190be6ce8852, type: 2}
+  circle: {fileID: 11400000, guid: c34d2c973ebedb745bc580fafabbdd9f, type: 2}
 --- !u!1 &1603434995
 GameObject:
   m_ObjectHideFlags: 0

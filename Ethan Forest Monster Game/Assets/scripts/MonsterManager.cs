@@ -16,6 +16,7 @@ public class MonsterManager : MonoBehaviour
     int moves;
     private Transform monsT;
     float time;
+    List<Vector2> path;
     void Start()
     {
         monsT = monster.GetComponent<Transform>();
@@ -24,6 +25,8 @@ public class MonsterManager : MonoBehaviour
 
         time = 0;
         pm.changeDieSpriteMonster(0);
+
+        monsT.position = new Vector3(12.5f, 6.5f, 0f);
     }
 
     // Update is called once per frame
@@ -32,20 +35,29 @@ public class MonsterManager : MonoBehaviour
         if (moves > 0 && time >= 1)
         {
 
-            Vector2[] tiles = getAvailabeTiles();
+            //Vector2[] tiles = getAvailabeTiles();
 
-
-            Vector2 bestMove = tiles[0];
-            float bestDistance = float.MaxValue;
-            for (int i = 0; i < tiles.Length; i++)
+            if (path == null)
             {
-                float d1 = Vector2.Distance(tiles[i], player.GetComponent<Transform>().position);
-                if (d1 < bestDistance)
-                {
-                    bestDistance = d1;
-                    bestMove = tiles[i];
-                }
+                Debug.Log("Null");
+                time = 0;
+                return;
             }
+            Vector2 bestMove = path[0];
+            path.RemoveAt(0);
+            bestMove.x += 0.5f;
+            bestMove.y += 0.5f;
+         
+            //float bestDistance = float.MaxValue;
+            //for (int i = 0; i < tiles.Length; i++)
+            //{
+            //    float d1 = Vector2.Distance(tiles[i], player.GetComponent<Transform>().position);
+            //    if (d1 < bestDistance)
+            //    {
+            //        bestDistance = d1;
+            //        bestMove = tiles[i];
+            //    }
+            //}
 
             moves -= 1;
             if (moves == 0)
@@ -54,7 +66,7 @@ public class MonsterManager : MonoBehaviour
             }
             bestMove = gm.getTpTree(bestMove);
             monsT.transform.position = bestMove;
-            
+
             checkTouchingPlayer();
             time = 0;
         }
@@ -65,6 +77,13 @@ public class MonsterManager : MonoBehaviour
 
     public void takeTurn(int moves)
     {
+        grid.GetComponent<FogOfWar>().init();
+
+        path = gm.findPath(monsT.position, player.GetComponent<Transform>().position);
+        //Debug.Log(path);
+
+        //Check tp trees
+
         this.moves = moves;
         pm.changeDieSpriteMonster(moves);
         time = 0;
@@ -92,6 +111,7 @@ public class MonsterManager : MonoBehaviour
         Vector3Int position = grid.WorldToCell(posInit);
         TileBase tile2 = grid.GetTile(position);
         TileBase tile = collisionMap.GetTile(position);
+        
 
         if (tile == null && tile2 != null)
         {

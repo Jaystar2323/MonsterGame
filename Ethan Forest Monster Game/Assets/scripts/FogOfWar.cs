@@ -10,7 +10,6 @@ public class FogOfWar : MonoBehaviour
     [SerializeField] Transform player;
     public int width;
     public int height;
-    bool start = false;
 
     public void init()
     {
@@ -21,23 +20,15 @@ public class FogOfWar : MonoBehaviour
             for (int j = -height; j < height; j++)
             {
                 Tile tile = (Tile)tm.GetTile(new Vector3Int(i, j, 0));
-                Debug.Log(tm.GetTile(new Vector3Int(0, 0, 0)));
                 tile.color = new Color(1, 1, 1);
 
             }
         }
         tm.RefreshAllTiles();
         updateTiles();
-        start = true;
     }
     public void updateTiles()
     {
-        if (!start)
-        {
-            init();
-            start = true;
-            return;
-        }
         Vector3Int playerPos = tm.WorldToCell(player.position);
         int[] maxs = {1, 2,3,3,3,2,1 };
         int k = 0;
@@ -58,7 +49,7 @@ public class FogOfWar : MonoBehaviour
                         tile.color = Color.white;
                     }
                     
-                    tm.RefreshTile(new Vector3Int(playerPos.x + i, playerPos.y + j, playerPos.z));
+                    //tm.RefreshTile(new Vector3Int(playerPos.x + i, playerPos.y + j, playerPos.z));
                 }
                 
             }

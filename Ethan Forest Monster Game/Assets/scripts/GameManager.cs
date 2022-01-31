@@ -56,6 +56,13 @@ public class GameManager : MonoBehaviour
 
     public List<Vector2> findPath(Vector2 start, Vector2 end)
     {
+        Vector3Int startC = tm.WorldToCell(new Vector3(start.x, start.y, 0));
+        Vector3Int endC = tm.WorldToCell(new Vector3(end.x, end.y, 0));
+        start.x = startC.x;
+        start.y = startC.y;
+        end.x = endC.x;
+        end.y = endC.y;
+        
         Vector2 curPos = start;
         if (getNode(start).isSolid() || start.Equals(end))
         {
@@ -74,18 +81,26 @@ public class GameManager : MonoBehaviour
         Vector2 up = new Vector2(0, 1);
         Vector2 down = new Vector2(0, -1);
         Vector2 left = new Vector2(-1, 0);
-        Vector2 right = new Vector2(0, 1);
+        Vector2 right = new Vector2(1, 0);
 
         while (!curPos.Equals(end))
         {
-            //Debug.Log("hi");
             calcValues(open, closed, curPos, up, start, end);
             calcValues(open, closed, curPos, down, start, end);
             calcValues(open, closed, curPos, left, start, end);
             calcValues(open, closed, curPos, right, start, end);
-            //Debug.Log(open.Count);
-            if (open[0] == null)
+            if (open.Count == 0)
             {
+
+                Tile tile2 = (Tile)tm.GetTile(new Vector3Int((int)start.x, (int)start.y, 0));
+                tile2.color = new Color(0, 0, 1);
+                tm.RefreshTile(new Vector3Int((int)start.x, (int)start.y, 0));
+
+                tile2 = (Tile)tm.GetTile(new Vector3Int((int)end.x, (int)end.y, 0));
+                tile2.color = new Color(0, 0, 1);
+                tm.RefreshTile(new Vector3Int((int)end.x, (int)end.y, 0));
+
+                Debug.Log("No path found");
                 return null;
             }
             else
@@ -93,11 +108,16 @@ public class GameManager : MonoBehaviour
                 curPos = open[0];
                 open.RemoveAt(0);
                 closed.Add(curPos);
+                Tile tile = (Tile)tm.GetTile(new Vector3Int((int)curPos.x, (int)curPos.y, 0));
+                tile.color = new Color(0, 0.2f, 0);
+                tm.RefreshTile(new Vector3Int((int)curPos.x, (int)curPos.y, 0));
+
             }
-            //Debug.Log(c + ": " + curPos + " Open: ");
-            //printList(open);
+
 
         }
+
+
 
         while (getNode(curPos).getF() != -1)
         {
@@ -105,19 +125,25 @@ public class GameManager : MonoBehaviour
             curPos = getNode(curPos).getParent().getPos();
         }
         path.Reverse();
+
+        foreach (Vector2 t in path)
+        {
+            Tile tile = (Tile)tm.GetTile(new Vector3Int((int)t.x, (int)t.y, 0));
+            tile.color = new Color(0.5f, 0, 0.5f, 0.5f);
+            tm.RefreshTile(new Vector3Int((int)t.x, (int)t.y, 0));
+        }
+
         return path; //Path shouldn't include start tile
     }
 
     void calcValues(List<Vector2> open, List<Vector2> closed, Vector2 curPos, Vector2 dir, Vector2 start, Vector2 end)
     {
-        //Debug.Log("hi");
         Vector2 newPose = curPos + dir;
         Node t = getNode(newPose);
         if (t != null && !t.isSolid())
         {
             if (open.Contains(newPose) || closed.Contains(newPose))
             {
-                //Debug.Log("NO");
                 return;
             }
 
@@ -134,6 +160,9 @@ public class GameManager : MonoBehaviour
             }
             t.setParent(getNode(curPos));
             open.Insert(i, newPose);
+            Tile tile = (Tile)tm.GetTile(new Vector3Int((int)newPose.x, (int)newPose.y, 0));
+            tile.color = new Color(1, 0, 0);
+            tm.RefreshTile(new Vector3Int((int)newPose.x, (int)newPose.y, 0));
         }
     }
 
@@ -145,12 +174,12 @@ public class GameManager : MonoBehaviour
             str += i + " ";
         }
         str += "Count: "+list.Count;
-        //Debug.Log(str);
+        Debug.Log(str);
     }
     public static Node getNode(Vector2 tile)
     {
-
-        if ((int)tile.x + 13 > nodes.GetLength(0) || (int)tile.y + 8 > nodes.GetLength(1))
+        //Debug.Log((tile.x) + " " + (tile.y));
+        if ((int)tile.x + 13 >= nodes.GetLength(0) || (int)tile.y + 8 >= nodes.GetLength(1) || (int)tile.x +13 < 0 || (int)tile.y + 8 < 0)
         {
             return null;
         }

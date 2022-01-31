@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
         mm = gm.GetComponent<MonsterManager>();
 
         setPosition(-5, -2);
-        map.GetComponent<FogOfWar>().updateTiles();
     }
 
     // Update is called once per frame
@@ -29,6 +28,7 @@ public class Player : MonoBehaviour
         if (moves > 0 && Input.GetMouseButton(0))
         {
             Vector3 newPos = getMousePos();
+            //newPos.z = 1;
             if (((newPos.x == transform.position.x + 1 || newPos.x == transform.position.x - 1)  && newPos.y == transform.position.y) || ((newPos.y == transform.position.y + 1 || newPos.y == transform.position.y - 1) && newPos.x == transform.position.x))
             {
                 
