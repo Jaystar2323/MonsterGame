@@ -116,13 +116,13 @@ public class GameManager : MonoBehaviour
 
 
         }
-
-
-
+        //Debug.Log(curPos + " " + getNode(curPos).getParent().getPos());
         while (getNode(curPos).getF() != -1)
         {
+
             path.Add(curPos);
             curPos = getNode(curPos).getParent().getPos();
+            //Debug.Log(curPos + " " + getNode(curPos).getParent().getPos());
         }
         path.Reverse();
 
@@ -142,10 +142,13 @@ public class GameManager : MonoBehaviour
         Node t = getNode(newPose);
         if (t != null && !t.isSolid())
         {
+            
+
             if (open.Contains(newPose) || closed.Contains(newPose))
             {
                 return;
             }
+            t.setParent(getNode(curPos));
 
             int f = t.calculateValues(newPose, start, end);
             int i = 0;
@@ -158,7 +161,6 @@ public class GameManager : MonoBehaviour
             {
                 i++;
             }
-            t.setParent(getNode(curPos));
             open.Insert(i, newPose);
             Tile tile = (Tile)tm.GetTile(new Vector3Int((int)newPose.x, (int)newPose.y, 0));
             tile.color = new Color(1, 0, 0);

@@ -8,7 +8,7 @@ public class Node
 
     float f; //sum g + h
     float g; //distance to end node
-    float h; //distance to start node
+    float h; //distance to start node, through path taken, so based on parent's h value
 
     Vector2 pos;
     Node parent;
@@ -38,14 +38,14 @@ public class Node
     {
         f = -1;
         g = -1;
-        h = -1;
+        h = 0;
 
     }
 
     public int calculateValues(Vector2 pos, Vector2 start, Vector2 end)
     {
         g = GameManager.distance(pos, end);
-        h = GameManager.distance(pos, start);
+        h = parent.h + 1;
         f = g + h;
         return (int)f;
     }
