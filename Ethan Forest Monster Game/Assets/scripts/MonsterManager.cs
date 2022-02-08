@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MonsterManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject monster;
     [SerializeField] Tilemap grid;
+    [SerializeField] Text msg;
     GameManager gm;
     PlayerManager pm;
     int moves;
@@ -47,7 +49,7 @@ public class MonsterManager : MonoBehaviour
             path.RemoveAt(0);
             bestMove.x += 0.5f;
             bestMove.y += 0.5f;
-         
+
             //float bestDistance = float.MaxValue;
             //for (int i = 0; i < tiles.Length; i++)
             //{
@@ -58,16 +60,50 @@ public class MonsterManager : MonoBehaviour
             //        bestMove = tiles[i];
             //    }
             //}
-
-            moves -= 1;
-            if (moves == 0)
-            {
-                pm.monsterFinishTurn();
-            }
             bestMove = gm.getTpTree(bestMove);
             monsT.transform.position = bestMove;
+            moves -= 1;
+            
+            if (!checkTouchingPlayer() && moves == 0)
+            {
+                string tilename = grid.GetTile(grid.WorldToCell(monsT.position)).name;
+               // Debug.Log(tilename);
+                path = gm.findPath(monsT.position, player.GetComponent<Transform>().position);
 
-            checkTouchingPlayer();
+                if (tilename == "bush" || tilename == "tree_head" || tilename == "giant_tree_trunk" || tilename == "giant_tree_head")
+                {
+                    msg.text = "Monster is hidden";
+
+                }
+                else if (path.Count <= 10)
+                {
+                    msg.text = path.Count + " moves away!";
+                }
+                else
+                {
+                    if (monsT.position.x < 0 && monsT.position.y < 0)
+                    {
+                        msg.text = "Bottom left";
+                    }
+                    if (monsT.position.x > 0 && monsT.position.y < 0)
+                    {
+                        msg.text = "Bottom right";
+                    }
+                    if (monsT.position.x < 0 && monsT.position.y > 0)
+                    {
+                        msg.text = "Top left";
+                    }
+                    if (monsT.position.x > 0 && monsT.position.y > 0)
+                    {
+                        msg.text = "Top right";
+                    }
+                }
+                pm.monsterFinishTurn();
+                
+            }
+
+
+            
             time = 0;
         }
         pm.changeDieSpriteMonster(moves);
@@ -77,9 +113,51 @@ public class MonsterManager : MonoBehaviour
 
     public void takeTurn(int moves)
     {
-        grid.GetComponent<FogOfWar>().init();
-
+        //grid.GetComponent<FogOfWar>().init();
+        //moves = 4;
         path = gm.findPath(monsT.position, player.GetComponent<Transform>().position);
+        if (path == null)
+        {
+            return;
+        }
+        //Debug.Log(moves + " " + path.Count);
+        if (path.Count > moves)
+        {
+            List<Vector2> treePath = null;
+            List<Vector2> tp;
+            foreach (Vector2 tree in gm.tpTrees)
+            {
+                tp = gm.findPath(monsT.position, tree);
+                
+                if (tp != null)
+                {
+                    //Debug.Log(gm.getTpTree(tree) + " " + (Vector2)player.GetComponent<Transform>().position);
+                    List<Vector2> afterTp = gm.findPath(gm.getTpTree(tree), (Vector2)player.GetComponent<Transform>().position);
+                    //Debug.Log(afterTp);
+                    foreach (Vector2 i in afterTp)
+                    {
+                        tp.Add(i);
+                    }
+                    
+                   //  Debug.Log(tp.Count);
+                    if (treePath == null || tp.Count < treePath.Count)
+                    {
+                        treePath = tp;
+                    }
+                }
+                
+
+            }
+            //Debug.Log(treePath.Count + " " + path.Count);
+            if (treePath != null && treePath.Count < path.Count)
+            {
+                //Debug.Log(treePath.Count + " " + path.Count);
+                path = treePath;
+            }
+
+        }
+
+
         //Debug.Log(path);
 
         //Check tp trees
@@ -122,14 +200,15 @@ public class MonsterManager : MonoBehaviour
             return new Vector2(20000, 20000);
         }
     }
-    public void checkTouchingPlayer()
+    public bool checkTouchingPlayer()
     {
         float j = GameManager.distance(player.GetComponent<Transform>().position, monsT.transform.position);
         if (j < 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Debug.Log("Player Died!");
-
+            return true;
         }
+        return false;
     }
 }

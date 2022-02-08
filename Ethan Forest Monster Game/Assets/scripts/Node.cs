@@ -27,7 +27,7 @@ public class Node
         return solid;
     }
 
-    public void initTile()
+    public void init()
     {
         f = 0;
         g = 0;
@@ -70,5 +70,14 @@ public class Node
     public int getG()
     {
         return (int)g;
+    }
+    public int getH()
+    {
+        return (int)h;
+    }
+
+    public void setH(int h)
+    {
+        this.h = h;
     }
 }

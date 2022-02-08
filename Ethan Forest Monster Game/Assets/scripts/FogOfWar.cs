@@ -20,7 +20,7 @@ public class FogOfWar : MonoBehaviour
             for (int j = -height; j < height; j++)
             {
                 Tile tile = (Tile)tm.GetTile(new Vector3Int(i, j, 0));
-                tile.color = new Color(1, 1, 1);
+                tile.color = new Color(0, 0, 0);
 
             }
         }
@@ -49,7 +49,7 @@ public class FogOfWar : MonoBehaviour
                         tile.color = Color.white;
                     }
                     
-                    //tm.RefreshTile(new Vector3Int(playerPos.x + i, playerPos.y + j, playerPos.z));
+                    tm.RefreshTile(new Vector3Int(playerPos.x + i, playerPos.y + j, playerPos.z));
                 }
                 
             }

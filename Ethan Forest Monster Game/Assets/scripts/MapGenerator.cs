@@ -62,17 +62,39 @@ public class MapGenerator : MonoBehaviour
         placeBush(new Vector2(4,-7));
         placeBush(new Vector2(4,3));
         placeHorizontalFallenTreen(new Vector2(-6, 3), 4);
+        placeHorizontalFallenTreen(new Vector2(4, 1), 5);
         placeSmallRock(new Vector2(-5, -1), 2);
+        placeSmallRock(new Vector2(6, 3), 2);
+        placeSmallRock(new Vector2(-11, -7), 1);
         placeLargeRock(new Vector2(8, -4), 2);
         placeLargeRock(new Vector2(-10, 1), 2);
         placeTree(new Vector2(-6, -6));
-        placeTpTree(new Vector2(11, -7), new Vector2(-12, 3), triangle);
+        placeTpTree(new Vector2(11, 0), new Vector2(-12, 3), triangle);
         placeTpTree(new Vector2(0, -5), new Vector2(8, 6), square);
-        placeTpTree(new Vector2(-2, 5), new Vector2(4, 0), circle);
+        placeTpTree(new Vector2(-2, 5), new Vector2(2, 0), circle);
+        placeVerticalLog(new Vector2(0, 0), 4);
+        placeVerticalLog(new Vector2(8, -6), 2);
+
+        for (int i = minX; i <= maxX; i++)
+        {
+            for (int j = minY; j <= maxY; j++)
+            {
+                if (i == -5 && j == -2)
+                {
+                    continue;
+                }
+                float rand = Random.Range(0f,1f);
+                if (rand <= 0.07 && player.GetTile(new Vector3Int(i, j, 0)).name == "tile")
+                {
+                    placeBush(new Vector2(i,j));
+                }
+            }
+        }
+
         player.RefreshAllTiles();
         fow.init();
 
-        //Debug.Log(gm.findPath(new Vector2(-5, -2), new Vector2(12, 6)).Count);
+        //Debug.Log(gm.findPath(new Vector2(-7.5f, 0.5f), new Vector2(-8.5f, -4.5f)));
         //Debug.Log(gm.findPath(new Vector2(12,6), new Vector2(-5,-2)).Count);
 
     }
@@ -150,20 +172,21 @@ public class MapGenerator : MonoBehaviour
     }
     void placeTpTree(Vector2 loc1, Vector2 loc2, Tile trunk)
     {
+        Vector2 mid = new Vector2(0.5f, 0.5f);
         if (trunk.name.Equals("circle_tree"))
         {
-            gm.circle1 = loc1;
-            gm.circle2 = loc2;
+            gm.tpTrees[0] = loc1 + mid;
+            gm.tpTrees[1] = loc2 + mid;
         }
         else if (trunk.name.Equals("square_tree"))
         {
-            gm.square1 = loc1;
-            gm.square2 = loc2;
+            gm.tpTrees[2] = loc1 + mid;
+            gm.tpTrees[3] = loc2 + mid;
         }
         else if (trunk.name.Equals("triangle_tree"))
         {
-            gm.triangle1 = loc1;
-            gm.triangle2 = loc2;
+            gm.tpTrees[4] = loc1 + mid;
+            gm.tpTrees[5] = loc2 + mid;
         }
 
         createColliderTile(new Vector3Int((int)loc1.x, (int)loc1.y, 0), trunk);
@@ -182,11 +205,21 @@ public class MapGenerator : MonoBehaviour
     {
 
     }
-    void placeVerticalLog()
+    void placeKey()
     {
 
     }
-    void placeVerticalFallenTree()
+    void placeVerticalLog(Vector2 start, int length)
+    {
+        createColliderTile(new Vector3Int((int)start.x, (int)start.y, 0), log1, r270);
+
+        for (int i = 1; i < length - 1; i++)
+        {
+            createColliderTile(new Vector3Int((int)start.x, (int)start.y - i, 0), log2, r270);
+        }
+        createColliderTile(new Vector3Int((int)start.x, (int)start.y - length + 1, 0), log3, r270);
+    }
+    void placeVerticalFallenTree(Vector2 start, int length)
     {
 
     }
