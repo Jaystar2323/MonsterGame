@@ -12,6 +12,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Tilemap collision;
     [SerializeField] GameManager gm;
     [SerializeField] FogOfWar fow;
+    Vector2 playerPosition;
 
     [SerializeField] Tile tile;
     [SerializeField] Tile log1;
@@ -28,6 +29,11 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] Tile triangle;
     [SerializeField] Tile square;
     [SerializeField] Tile circle;
+    [SerializeField] Tile key;
+    [SerializeField] Tile end1;
+    [SerializeField] Tile end2;
+    [SerializeField] Tile roamRocks;
+
 
 
     // Start is called before the first frame update
@@ -42,6 +48,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
+        playerPosition = new Vector2(-5,-2); //Player Spawn Location Hard Coded, change later
         minX = -width - 1;
         maxX = width;
         minY = -height -1;
@@ -57,10 +64,6 @@ public class MapGenerator : MonoBehaviour
         }
         placeHorizontalLog(new Vector2(3, 4), 5);
         placeHorizontalLog(new Vector2(-11, -3), 3);
-        placeBush(new Vector2(4,3));
-        placeBush(new Vector2(-4,-3));
-        placeBush(new Vector2(4,-7));
-        placeBush(new Vector2(4,3));
         placeHorizontalFallenTreen(new Vector2(-6, 3), 4);
         placeHorizontalFallenTreen(new Vector2(4, 1), 5);
         placeSmallRock(new Vector2(-5, -1), 2);
@@ -74,12 +77,23 @@ public class MapGenerator : MonoBehaviour
         placeTpTree(new Vector2(-2, 5), new Vector2(2, 0), circle);
         placeVerticalLog(new Vector2(0, 0), 4);
         placeVerticalLog(new Vector2(8, -6), 2);
+        placeVerticalFallenTree(new Vector2(5, -3), 4);
 
+        int keyquad = Random.Range(1, 5);
+        int endquad = Random.Range(1, 5);
+        while (endquad == keyquad)
+        {
+            endquad = Random.Range(1, 5);
+        }
+
+        while (!placeKey(keyquad)) { }
+        while (!placeEnd(endquad)) { }
+  
         for (int i = minX; i <= maxX; i++)
         {
             for (int j = minY; j <= maxY; j++)
             {
-                if (i == -5 && j == -2)
+                if (i == playerPosition.x && j == playerPosition.y) 
                 {
                     continue;
                 }
@@ -87,6 +101,10 @@ public class MapGenerator : MonoBehaviour
                 if (rand <= 0.07 && player.GetTile(new Vector3Int(i, j, 0)).name == "tile")
                 {
                     placeBush(new Vector2(i,j));
+                }
+                if (rand >= 0.99 && player.GetTile(new Vector3Int(i, j, 0)).name == "tile")
+                {
+                    createTile(new Vector3Int(i, j, 0), roamRocks);
                 }
             }
         }
@@ -201,13 +219,61 @@ public class MapGenerator : MonoBehaviour
     {
 
     }
-    void placeEnd()
+    bool placeEnd(int quad)
     {
+        int multiplyX = 1;
+        int multiplyY = 1;
+        if (quad == 2)
+        {
+            multiplyX = -1;
+        }
+        else if (quad == 3)
+        {
+            multiplyX = -1;
+            multiplyY = -1;
+        }
+        else if (quad == 4)
+        {
+            multiplyY = -1;
+        }
 
+        Vector3Int randSpot = new Vector3Int(multiplyX * Random.Range(0, maxX-1), multiplyY * Random.Range(0, maxY), 0);
+        if (player.GetTile(randSpot).name == "tile" && player.GetTile(randSpot+Vector3Int.right).name == "tile" && !(randSpot.x == playerPosition.x && randSpot.y == playerPosition.y) && !(randSpot.x+1 == playerPosition.x && randSpot.y == playerPosition.y))
+        {
+            createTile(randSpot, end1);
+            createTile(randSpot+Vector3Int.right, end2);
+            return true;
+        }
+        return false;
     }
-    void placeKey()
-    {
 
+    //Returns whether successfully placed the key
+    bool placeKey(int quad)
+    {
+        int multiplyX = 1;
+        int multiplyY = 1;
+        if (quad == 2)
+        {
+            multiplyX = -1;
+        }
+        else if (quad == 3)
+        {
+            multiplyX = -1;
+            multiplyY = -1;
+        }
+        else if (quad == 4)
+        {
+            multiplyY = -1;
+        }
+
+        Vector3Int randSpot = new Vector3Int(multiplyX*Random.Range(0, maxX), multiplyY * Random.Range(0, maxY), 0);
+        Debug.Log(randSpot);
+        if (player.GetTile(randSpot).name == "tile" && !(randSpot.x == playerPosition.x && randSpot.y == playerPosition.y))
+        {
+            createTile(randSpot, key);
+            return true;
+        }
+        return false;
     }
     void placeVerticalLog(Vector2 start, int length)
     {
@@ -221,9 +287,20 @@ public class MapGenerator : MonoBehaviour
     }
     void placeVerticalFallenTree(Vector2 start, int length)
     {
+        createColliderTile(new Vector3Int((int)start.x, (int)start.y, 0), log1, r270);
+
+        
+        for (int i = 1; i < length - 1; i++)
+        {
+            createColliderTile(new Vector3Int((int)start.x, (int)start.y - i, 0), log2, r270);
+        }
+        createTile(new Vector3Int((int)start.x, (int)start.y - length + 1, 0), giantTreeLog, r180);
+        createTile(new Vector3Int((int)start.x -1, (int)start.y - length + 1, 0), giantTreeHead, r270);
+        createTile(new Vector3Int((int)start.x, (int)start.y - length, 0), giantTreeHead, r90);
+        createTile(new Vector3Int((int)start.x -1, (int)start.y - length, 0), giantTreeHead);
 
     }
-        
+
 
 
     //Helper functions

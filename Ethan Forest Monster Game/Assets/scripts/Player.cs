@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     private int moves;
+    [SerializeField] Tile tile;
 
+    private bool keyFound = false;
     public Grid grid;
     public GameObject gm;
     private PlayerManager pm;
@@ -34,8 +37,17 @@ public class Player : MonoBehaviour
                 
                 if (map.GetTile(map.WorldToCell(newPos)) != null)
                 {
-                    if ((moves == 1 && map.GetTile(map.WorldToCell(newPos)).name == "tile") || moves > 1)
+                    if ((moves == 1 && ((map.GetTile(map.WorldToCell(newPos)).name == "tile") || map.GetTile(map.WorldToCell(newPos)).name == "roaming_rocks" || map.GetTile(map.WorldToCell(newPos)).name == "key_1" || map.GetTile(map.WorldToCell(newPos)).name == "exit_1" || map.GetTile(map.WorldToCell(newPos)).name == "exit_2") || moves > 1))
                     {
+                        if (map.GetTile(map.WorldToCell(newPos)).name == "key_1")
+                        {
+                            keyFound = true;
+                            map.SetTile(map.WorldToCell(newPos), tile);
+                        }
+                        if (keyFound && moves == 1 && (map.GetTile(map.WorldToCell(newPos)).name == "exit_1" || map.GetTile(map.WorldToCell(newPos)).name == "exit_2"))
+                        {
+                            SceneManager.LoadScene("Victory"); //Should be victory screen
+                        }
                         GetComponent<Transform>().transform.position = newPos;
                         moves -= 1;
                         pm.changeDieSprite(moves);

@@ -5,10 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     //circle 0,1 - square 2,3 - triangle 5,6
     public Vector2[] tpTrees = new Vector2[6];
+    //public Vector2 key;
+    //public Vector2 end1, end2;
 
     public Vector2 up = new Vector2(0, 1);
     public Vector2 down = new Vector2(0, -1);

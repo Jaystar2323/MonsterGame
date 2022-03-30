@@ -205,7 +205,7 @@ public class MonsterManager : MonoBehaviour
         float j = GameManager.distance(player.GetComponent<Transform>().position, monsT.transform.position);
         if (j < 1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("GameOver"); //Should be death screen
             Debug.Log("Player Died!");
             return true;
         }
